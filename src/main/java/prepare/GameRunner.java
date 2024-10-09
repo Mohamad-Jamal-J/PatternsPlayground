@@ -14,7 +14,7 @@ public class GameRunner {
         return instance;
     }
 
-    private String setGame(Game game) {
+    private String setGame(Game game) throws Exception {
         this.game = game;
         setPaused(true);
         return launch(game);
@@ -24,14 +24,14 @@ public class GameRunner {
         isPaused = paused;
     }
 
-    private String launch(Game game) {
+    private String launch(Game game) throws Exception {
         if (game==null)
             return "";
 
         return String.format(Messages.LAUNCHING, game) + "\n" + resume();
     }
 
-    public String run(Game game){
+    public String run(Game game) throws Exception{
         if (this.game!=null && game==null)
             return String.format(Messages.NO_INTERRUPTION, this.game);
 
@@ -43,9 +43,9 @@ public class GameRunner {
         return pause() + "\n" + close() + "\n" + setGame(game);
     }
 
-    public String pause() {
+    public String pause() throws Exception {
         if (game == null)
-            return Messages.NO_GAMES_RUNNING;
+            throw new Exception(Messages.NO_GAMES_RUNNING);
 
         if (isPaused)
             return String.format(Messages.ALREADY_PAUSED, game);
@@ -54,9 +54,9 @@ public class GameRunner {
         return String.format(Messages.PAUSED, game);
     }
 
-    public String resume() {
+    public String resume() throws Exception {
         if (game == null)
-            return Messages.NO_GAMES_RUNNING;
+            throw new Exception(Messages.NO_GAMES_RUNNING);
 
         if (!isPaused)
             return String.format(Messages.ALREADY_RUNNING, game);
@@ -65,9 +65,9 @@ public class GameRunner {
         return String.format(Messages.RUN, game);
     }
 
-    public String close(){
+    public String close() throws Exception {
         if (game==null)
-            return Messages.NO_GAMES_RUNNING;
+            throw new Exception(Messages.NO_GAMES_RUNNING);
 
         return ((!isPaused)? pause()+"\n": "") + String.format(Messages.CLOSE_GAME, game) + setGame(null);
     }

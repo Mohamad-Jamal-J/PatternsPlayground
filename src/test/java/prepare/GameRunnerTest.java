@@ -1,5 +1,6 @@
 package prepare;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,14 +28,14 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testRunGame() {
+    public void testRunGame() throws Exception {
         String output = runner.run(mario);
         String expected = String.format(Messages.LAUNCHING, mario) + "\n" + String.format(Messages.RUN, mario);
         assertEquals(expected, output);
     }
 
     @Test
-    public void testPauseGame() {
+    public void testPauseGame() throws Exception {
         runner.run(mario);
         String expected = String.format(Messages.PAUSED, mario);
         String output = runner.pause();
@@ -42,7 +43,7 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testResumeGame() {
+    public void testResumeGame() throws Exception {
         runner.run(mario);
         runner.pause();
         String expected = String.format(Messages.RUN, mario);
@@ -51,16 +52,16 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testCloseGame() {
+    public void testCloseGame() throws Exception {
         runner.run(mario);
         runner.pause();
-        String expected = String.format(Messages.CLOSE_GAME, mario);
         String output = runner.close();
+        String expected = String.format(Messages.CLOSE_GAME, mario);
         assertEquals(expected, output);
     }
 
     @Test
-    public void testLaunchingMultipleGames() {
+    public void testLaunchingMultipleGames() throws Exception {
         runner.run(mario);
         String expected = String.format(Messages.PAUSED, mario) + "\n" +
                 String.format(Messages.CLOSE_GAME, mario) + "\n" +
@@ -71,7 +72,7 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testPauseAlreadyPausedGame() {
+    public void testPauseAlreadyPausedGame() throws Exception {
         runner.run(mario);
         runner.pause();
         String expected = String.format(Messages.ALREADY_PAUSED, mario);
@@ -80,7 +81,7 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testResumeAlreadyRunningGame() {
+    public void testResumeAlreadyRunningGame() throws Exception {
         runner.run(mario);
         String expected = String.format(Messages.ALREADY_RUNNING, mario);
         String output = runner.resume();
@@ -88,7 +89,7 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testCloseGameWithoutPausing() {
+    public void testCloseGameWithoutPausing() throws Exception {
         runner.run(mario);
         String expected = String.format(Messages.PAUSED, mario) + "\n" +
                 String.format(Messages.CLOSE_GAME, mario);
@@ -97,20 +98,21 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testNoGamesRunning() {
+    public void testNoGamesRunning() throws Exception {
         String expected = Messages.NO_GAMES_RUNNING;
-        String output = runner.pause();
-        assertEquals(expected, output);
 
-        output = runner.resume();
-        assertEquals(expected, output);
+        Exception pause_exception = assertThrowsExactly(Exception.class, () -> runner.pause());
+        assertEquals(pause_exception.getMessage(), expected);
 
-        output = runner.close();
-        assertEquals(expected, output);
+        Exception resume_exception = assertThrowsExactly(Exception.class, () -> runner.resume());
+        assertEquals(resume_exception.getMessage(), expected);
+
+        Exception exception = assertThrowsExactly(Exception.class, () -> runner.close());
+        assertEquals(exception.getMessage(), expected);
     }
 
     @Test
-    public void testRunNullGame() {
+    public void testRunNullGame() throws Exception {
         runner.run(mario);
         String expected = String.format(Messages.NO_INTERRUPTION, mario);
         String output = runner.run(null);

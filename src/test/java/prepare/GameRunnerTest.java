@@ -98,7 +98,7 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void testNoGamesRunning() throws Exception {
+    public void testNoGamesRunning() {
         String expected = Messages.NO_GAMES_RUNNING;
 
         Exception pause_exception = assertThrowsExactly(Exception.class, () -> runner.pause());

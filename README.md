@@ -1,4 +1,4 @@
-# PatternPlay (Java)
+# PatternsPlayground (Java)
 
 This Java repository contains two applications related to gaming console management. The first application showcases the **Singleton design pattern** to manage a single game runner, while the second application extends this concept by incorporating the **State design pattern** for enhanced game state management.
 

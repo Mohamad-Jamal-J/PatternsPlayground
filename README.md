@@ -1,34 +1,41 @@
 # PatternPlay (Java)
 
-This Java application helps manage a gaming console runner, allowing consoles to have only one runner component that manages single-game-at-a-time functionality. 
-It is designed specifically to showcase the **Singleton design pattern**, ensuring only one instance of the game runner can exist at a time.
+This Java repository contains two applications related to gaming console management. The first application showcases the **Singleton design pattern** to manage a single game runner, while the second application extends this concept by incorporating the **State design pattern** for enhanced game state management.
 
 ## Motivation
 
-If you've ever played with gaming consoles like PlayStation or Xbox, you'll notice that they only allow one game to run at a time. To mirror this single-game constraint, the `GameRunner` class was designed to ensure only one game can be managed and run at any given moment. This approach prevents the complexity and difficulty of managing multiple game runners simultaneously, aligning with the design of real-life gaming consoles that also have only one game runner.
+Gaming consoles like PlayStation and Xbox allow only one game to run at a time. This repository aims to mirror that functionality by implementing two versions of a game runner: one that focuses solely on ensuring a single instance of the runner and another that incorporates state management to handle the different states a game can be in.
 
-### GameRunner Class
+## Applications
 
-The `GameRunner` class contains methods to run, pause, resume, and close games. Here are the key components of the `GameRunner` class:
+### 1. Singleton Package
 
-- **Game Control Methods**
-    - `public String run(Game game)`: Runs the given game and returns a message describing the game's status.
-    - `public String pause()`: Pauses the current game and returns a message confirming the game has paused.
-    - `public String resume()`: Resumes the current game and returns a message confirming the game is running.
-    - `public String close()`: Closes the current game and returns a message confirming the game closure.
+This application demonstrates the basic Singleton design pattern. It ensures that only one instance of the game runner can exist at any time.
+
+- **Key Features**:
+  - **Single Instance**: Ensures only one `GameRunner` instance exists.
+  - **Game Control**: Basic methods to run, pause, and close a game.
+
+### 2. Singleton and State Package
+
+This application builds on the Singleton concept by incorporating the State design pattern. It allows for better management of the game's various states: running, paused, and no game.
+
+- **Key Features**:
+  - **Single Instance**: Maintains a single instance of `GameRunner`.
+  - **State Management**: Uses three states (NoGame, Paused, Running) to manage the game's lifecycle effectively.
+  - **Game Control**: Provides methods to run, pause, resume, and close games.
 
 ### Unit Testing
-
 Testing methods were created to allow users to see how different actions are handled in different states.
 
-### Code Sample
+### Code Sample for Singleton and State Package
 
-Here is an example of how to use the `GameRunner` and `Game` classes:
+Here is an example of how to use the `GameRunner` and `Game` classes in the Singleton and State package:
 
 ```java
 public class Main {
     private static final Game mario = new Game("Mario");
-    private static final Game callOfDuty = new Game("Call of duty black ops");
+    private static final Game callOfDuty = new Game("Call of Duty: Black Ops");
 
     public static void main(String[] args) {
         GameRunner runner = GameRunner.getInstance();

@@ -1,12 +1,12 @@
-package prepare;
+package singleton_and_state;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class GameRunnerTest {
+
     private GameRunner runner;
     private Game mario;
     private Game callOfDuty;
@@ -17,8 +17,9 @@ public class GameRunnerTest {
         mario = new Game("Mario");
         callOfDuty = new Game("Call of Duty");
     }
+
     @AfterEach
-    public void cleanUp(){
+    public void cleanUp() {
         runner.turnOff();
     }
 
@@ -91,8 +92,7 @@ public class GameRunnerTest {
     @Test
     public void testCloseGameWithoutPausing() throws Exception {
         runner.run(mario);
-        String expected = String.format(Messages.PAUSED, mario) + "\n" +
-                String.format(Messages.CLOSE_GAME, mario);
+        String expected = String.format(Messages.CLOSE_GAME, mario);
         String output = runner.close();
         assertEquals(expected, output);
     }
@@ -101,21 +101,20 @@ public class GameRunnerTest {
     public void testNoGamesRunning() {
         String expected = Messages.NO_GAMES_RUNNING;
 
-        Exception pause_exception = assertThrowsExactly(Exception.class, () -> runner.pause());
-        assertEquals(pause_exception.getMessage(), expected);
+        Exception pauseException = assertThrowsExactly(Exception.class, () -> runner.pause());
+        assertEquals(expected, pauseException.getMessage());
 
-        Exception resume_exception = assertThrowsExactly(Exception.class, () -> runner.resume());
-        assertEquals(resume_exception.getMessage(), expected);
+        Exception resumeException = assertThrowsExactly(Exception.class, () -> runner.resume());
+        assertEquals(expected, resumeException.getMessage());
 
-        Exception exception = assertThrowsExactly(Exception.class, () -> runner.close());
-        assertEquals(exception.getMessage(), expected);
+        Exception closeException = assertThrowsExactly(Exception.class, () -> runner.close());
+        assertEquals(expected, closeException.getMessage());
     }
 
     @Test
-    public void testRunNullGame() throws Exception {
-        runner.run(mario);
-        String expected = String.format(Messages.NO_INTERRUPTION, mario);
-        String output = runner.run(null);
-        assertEquals(expected, output);
+    public void testRunNullGame(){
+        String expected = Messages.INVALID_GAME;
+        Exception closeException = assertThrowsExactly(IllegalArgumentException.class, () -> runner.run(null));
+        assertEquals(expected, closeException.getMessage());
     }
 }

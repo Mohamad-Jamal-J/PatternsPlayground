@@ -1,4 +1,4 @@
-package prepare;
+package singleton;
 
 public class GameRunner {
     private Game game;

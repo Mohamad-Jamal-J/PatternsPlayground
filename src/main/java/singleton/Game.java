@@ -1,4 +1,4 @@
-package prepare;
+package singleton;
 
 public class Game implements Comparable<Game> {
     private String name;

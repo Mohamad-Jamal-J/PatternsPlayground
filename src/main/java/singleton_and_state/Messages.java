@@ -1,4 +1,4 @@
-package prepare;
+package singleton_and_state;
 
 public class Messages {
     public static final String RUN = "'%s' is running.";
@@ -9,6 +9,5 @@ public class Messages {
     public final static String NO_GAMES_RUNNING = "No games are currently running.";
     public final static String FREE = "The runner is free and ready to run any game";
     public final static String CLOSE_GAME = "Closing '%s'...\ngame got closed.\n" + FREE;
-    public static final String NO_INTERRUPTION = "The game you tried to run is damaged or have missing" +
-            " information.\n'%s' continues to run without interruption.";
+    public final static String INVALID_GAME = "The game you tried to run is damaged or have missing information.";
 }

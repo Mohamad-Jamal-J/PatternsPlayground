@@ -1,6 +1,6 @@
-package singleton_and_state;
+package factory;
 
-public class Running implements State{
+public class Running implements State {
     @Override
     public String run(GameRunner context, Game game) throws Exception{
         if (context.getGame().equals(game))

@@ -1,4 +1,4 @@
-package singleton_and_state;
+package state;
 
 public class Messages {
     public static final String RUN = "'%s' is running.";

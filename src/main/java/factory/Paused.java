@@ -1,6 +1,6 @@
-package singleton_and_state;
+package factory;
 
-public class Paused implements State{
+public class Paused implements State {
     @Override
     public String run(GameRunner context, Game game) throws Exception{
         return context.setGame(game);

@@ -1,4 +1,4 @@
-package singleton_and_state;
+package factory;
 
 public interface State {
     String run(GameRunner context, Game game) throws Exception;
